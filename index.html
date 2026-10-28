@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LegWork — AI agents for admin and operations</title>
+<meta name="description" content="We do the legwork. You run the business. AI agents for admin and operations.">
+<link rel="canonical" href="https://legworks.com.au/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LegWork — We do the legwork. You run the business.">
+<meta property="og:description" content="AI agents for admin and operations.">
+<meta property="og:url" content="https://legworks.com.au/">
+<meta property="og:locale" content="en_AU">
+<meta name="theme-color" content="#F8F8F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --lw-ink:#15171A; --lw-paper:#F8F8F5; --lw-wing:#5A5E66; --lw-dim:#D9D8D3;
+  --dot:#1B7A4F; --focus:#1B7A4F;
+  --lw-font-display:'Archivo',system-ui,-apple-system,sans-serif;
+  --lw-font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --lw-font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --band-bg:#15171A; --band-fg:#F8F8F5; --band-sub:#B9BCC2; --band-rule:#D9D8D3;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lw-ink:#F8F8F5;--lw-paper:#15171A;--lw-wing:#B9BCC2;--lw-dim:#33363B;--focus:#F8F8F5;--band-bg:#33363B;--band-fg:#F8F8F5;--band-sub:#B9BCC2;--band-rule:#B9BCC2;color-scheme:dark}}
+:root[data-theme="dark"]{--lw-ink:#F8F8F5;--lw-paper:#15171A;--lw-wing:#B9BCC2;--lw-dim:#33363B;--focus:#F8F8F5;--band-bg:#33363B;--band-fg:#F8F8F5;--band-sub:#B9BCC2;--band-rule:#B9BCC2;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:96px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--lw-paper);color:var(--lw-ink);font:400 20px/1.55 var(--lw-font-body);-webkit-font-smoothing:antialiased}
+.col{max-width:1440px;margin:0 auto;padding-inline:max(clamp(24px,5.5vw,80px),calc((100% - 1200px)/2),env(safe-area-inset-left,0px))}
+a{color:inherit}
+p{margin:0}
+h1,h2{font-family:var(--lw-font-display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.label{font:500 16px/1.3 var(--lw-font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--lw-wing);margin:0}
+.band.ink .label{color:var(--band-sub)}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--lw-ink);color:var(--lw-paper);font:600 20px/1 var(--lw-font-body);min-height:60px;padding:18px 32px;border:0;text-decoration:none;cursor:pointer;border-radius:0;white-space:nowrap}
+.btn:hover{background:var(--lw-wing)}
+/* header: the one 4px ground line */
+header{position:sticky;top:0;z-index:5;background:var(--lw-paper);border-bottom:4px solid var(--lw-ink)}
+.nav{display:flex;align-items:center;padding-block:16px}
+.lw-wordmark{font:800 34px/1 var(--lw-font-display);color:var(--lw-ink);display:inline-flex;align-items:baseline;gap:.1em;letter-spacing:-.01em;text-decoration:none}
+.lw-wordmark .leg{color:var(--lw-wing)}
+.lw-wordmark .mk{display:inline-block;width:.965em;height:.965em;margin-bottom:-.12em;margin-right:.12em}
+.lw-wordmark .mk svg{display:block;width:100%;height:100%}
+.lw-wordmark .cue{width:.3em;height:.3em;background:var(--dot);display:inline-block;border-radius:50%;margin-left:.08em}
+/* blocks: one idea each. No vh units, so a full-page render cannot feed back on itself */
+.band{padding-block:clamp(72px,11vw,160px);border-top:2px solid var(--lw-dim)}
+.band.ink{background:var(--band-bg);color:var(--band-fg);border-top:0}
+.hero{border-top:0;min-height:max(600px,calc(62.5vw - 84px));display:flex;align-items:center;padding-block:clamp(56px,8vw,120px)}
+.hero .col{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(24px,3vw,40px)}
+h1{font-weight:900;font-size:clamp(40px,6.7vw,98px);line-height:1.02}
+h1>span{display:block}
+.desc{display:flex;align-items:baseline;gap:14px;font:500 clamp(20px,2vw,26px)/1.3 var(--lw-font-body)}
+.desc .dot{width:14px;height:14px;background:var(--dot);border-radius:50%;flex:none;transform:translateY(-.08em)}
+.hero .btn{margin-top:16px}
+.stmt{font:800 clamp(32px,4.6vw,66px)/1.08 var(--lw-font-display);letter-spacing:-.02em;text-wrap:balance;max-width:20ch}
+.quote{margin:0;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)}
+.sign{display:flex;align-items:center;gap:14px;color:var(--lw-ink)}
+.sign svg{display:block;width:69px;height:56px;flex:none}
+.sign .label{margin:0}
+.quote blockquote{margin:0}
+.quote .stmt{max-width:26ch}
+.relieve{display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)}
+.relieve .who{font-size:clamp(22px,2.2vw,28px);line-height:1.4;max-width:34ch;text-wrap:balance}
+.list{display:flex;flex-direction:column;gap:clamp(28px,3.4vw,48px)}
+.list ul{list-style:none;margin:0;padding:0;border-top:2px solid var(--lw-dim)}
+.list li{font:800 clamp(30px,4.2vw,58px)/1.1 var(--lw-font-display);letter-spacing:-.02em;border-bottom:2px solid var(--lw-dim)}
+.list li{padding-block:clamp(16px,1.8vw,24px);text-wrap:balance}
+.ink .list ul{border-top-color:var(--band-rule)}
+.ink .list li{font:700 clamp(26px,3.2vw,44px)/1.2 var(--lw-font-display);letter-spacing:-.015em;border-bottom-color:var(--band-rule)}
+.book{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,4vw,56px) clamp(40px,5vw,80px);align-items:start}
+.book h2{grid-column:1/-1;font-weight:900;font-size:clamp(34px,5.4vw,78px);line-height:1.04;max-width:20ch}
+.book .left{display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)}
+.ways{display:flex;flex-direction:column;gap:10px;font:500 20px/1.4 var(--lw-font-mono)}
+.ways a{text-decoration:none;border-bottom:2px solid var(--dot);align-self:flex-start}
+.ways a:hover{border-bottom-color:var(--lw-ink)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px}
+form label{display:flex;flex-direction:column;gap:6px;font-weight:500;min-width:0}
+form .full{grid-column:span 2}
+input,textarea{font:400 20px/1.4 var(--lw-font-body);padding:12px 14px;border:2px solid var(--lw-wing);background:var(--lw-paper);color:var(--lw-ink);border-radius:0;width:100%;appearance:none}
+textarea{resize:vertical}
+input:focus,textarea:focus{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--lw-ink)}
+.note{color:var(--lw-wing);font-size:16px}
+.err{display:none;border:2px solid var(--lw-ink);padding:8px 12px;font-weight:600;font-size:18px}
+.err::before{content:"Check: "}
+.err.on{display:block}
+footer{border-top:2px solid var(--lw-dim);padding-block:32px 48px;color:var(--lw-wing);font-size:18px}
+footer .col{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+footer .left{display:flex;flex-direction:column;gap:6px;min-width:0}
+footer .left b{color:var(--lw-ink);font-weight:600}
+footer a{text-decoration:none;border-bottom:1px solid var(--lw-wing)}
+footer a:hover{color:var(--lw-ink);border-bottom-color:var(--lw-ink)}
+.mark{width:22px;height:22px;opacity:.55;color:var(--lw-ink);flex:none;margin-left:auto;align-self:flex-end}
+.mark svg{display:block;width:100%;height:100%}
+@media (max-width:900px){.book{grid-template-columns:1fr}.book h2{grid-column:auto}.book form{order:1}.book .left{order:2}}
+@media (max-width:700px){.lw-wordmark{font-size:28px}}
+@media (max-width:900px){footer .left>span:first-of-type{display:none}}
+@media (max-width:600px){form{grid-template-columns:1fr}form .full{grid-column:auto}.btn{width:100%}footer .col{flex-wrap:wrap}h1{font-size:clamp(36px,11.2vw,48px)}}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background .15s}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"LegWork","url":"https://legworks.com.au/","description":"AI agents for admin and operations."}
+</script>
+</head>
+<body>
+
+<header>
+  <nav class="nav col" aria-label="Site">
+    <a class="lw-wordmark" href="#top" aria-label="LegWork, home"><span class="mk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="LegWork mark"><path fill="currentColor" d="M51 66 55 39 60 66 72 66 84 12 72 12 66 42 62 12 52 12 48 42 42 12 30 12 38 66ZM84 70 26 70 26 12 12 12 12 84 84 84Z"/></svg></span><span class="leg">leg</span>work<span class="cue"></span></a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="band hero" aria-labelledby="h1">
+    <div class="col">
+      <h1 id="h1"><span>We do <span style="white-space:nowrap">the legwork.</span></span> <span>You run the business.</span></h1>
+      <p class="desc"><span class="dot" aria-hidden="true"></span><span>AI agents for admin and operations.</span></p>
+      <a class="btn" href="#book">Book a 20-minute call</a>
+    </div>
+  </section>
+
+  <section class="band" aria-label="Two legs">
+    <div class="col">
+      <figure class="quote">
+        <blockquote><p class="stmt">“Two legs to stand on: beat the legwork with AI, and bring my values into the conversation.”</p></blockquote>
+        <figcaption class="sign"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118 96" aria-hidden="true" focusable="false"><path fill="currentColor" d="M51 66 55 39 60 66 72 66 84 12 72 12 66 42 62 12 52 12 48 42 42 12 30 12 38 66ZM84 70 26 70 26 12 12 12 12 84 84 84Z"/><circle cx="99" cy="77" r="7" fill="#1B7A4F"/></svg><span class="label">Rodrigo</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" aria-label="The aim">
+    <div class="col relieve">
+      <p class="stmt">The aim is to relieve your people, not overload them.</p>
+      <p class="who">For small businesses of one or two people, and for bigger teams stretched thin.</p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-does">
+    <div class="col list">
+      <h2 class="label" id="h-does">What LegWork does</h2>
+      <ul>
+        <li>Admin and operations</li>
+        <li>Websites</li>
+        <li>Marketing and social media</li>
+        <li>Training for you and your team</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band ink" aria-labelledby="h-how">
+    <div class="col list">
+      <h2 class="label" id="h-how">How it runs</h2>
+      <ul>
+        <li>Done right the first time. That saves time, money and effort.</li>
+        <li>You make the calls.</li>
+        <li>Your team learns how it works.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="book" class="band" aria-labelledby="h-book">
+    <div class="col book">
+      <h2 id="h-book"><label for="f-week">What’s the work that eats your week?</label></h2>
+      <div class="left">
+        <div class="ways">
+          <a href="mailto:hello@legworks.com.au?subject=20-minute%20call">hello@legworks.com.au</a>
+          <a href="tel:+61424681170" style="white-space:nowrap">0424 681 170</a>
+        </div>
+      </div>
+      <form id="book-form" novalidate aria-describedby="form-note">
+        <textarea class="full" id="f-week" name="week" rows="4"></textarea>
+        <label>Your name<input id="f-name" name="name" type="text" autocomplete="name" required></label>
+        <label>Business<input id="f-biz" name="business" type="text" autocomplete="organization"></label>
+        <label>Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+        <label>Phone<input id="f-phone" name="phone" type="tel" autocomplete="tel"></label>
+        <p class="err full" id="err" role="alert">Add your name and an email address to reply to.</p>
+        <div class="full"><button class="btn" type="submit">Book a 20-minute call</button></div>
+        <p class="note full" id="form-note">The button opens your email app with your answers filled in, addressed to hello@legworks.com.au. You press send.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <div class="left">
+      <b>LegWork · Rodrigo Soares</b>
+      <span><a href="mailto:hello@legworks.com.au">hello@legworks.com.au</a> · <a href="tel:+61424681170" style="white-space:nowrap">0424 681 170</a></span>
+      <span><a href="privacy.html">Privacy</a></span>
+    </div>
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="currentColor" fill-rule="evenodd"><path d="M 50 8 A 27.57 27.57 0 0 1 50 56 A 27.57 27.57 0 0 1 50 8 Z M 50 8 A 40 40 0 0 1 50 56 A 40 40 0 0 1 50 8 Z"/><path d="M 50 8 A 27.57 27.57 0 0 1 50 56 A 27.57 27.57 0 0 1 50 8 Z M 50 8 A 40 40 0 0 1 50 56 A 40 40 0 0 1 50 8 Z" transform="rotate(120 50 50)"/><path d="M 50 8 A 27.57 27.57 0 0 1 50 56 A 27.57 27.57 0 0 1 50 8 Z M 50 8 A 40 40 0 0 1 50 56 A 40 40 0 0 1 50 8 Z" transform="rotate(240 50 50)"/></g></svg></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var f=document.getElementById('book-form');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=function(id){return (document.getElementById(id).value||'').trim()};
+    var name=v('f-name'),email=document.getElementById('f-email'),err=document.getElementById('err');
+    if(!name||!email.validity.valid||!email.value.trim()){err.classList.add('on');(name?email:document.getElementById('f-name')).focus();return}
+    err.classList.remove('on');
+    var biz=v('f-biz');
+    var subject='20-minute call'+(biz?' — '+biz:'')+' — '+name;
+    var body=['Name: '+name,'Business: '+biz,'Email: '+email.value.trim(),'Phone: '+v('f-phone'),'','The work that eats my week:',v('f-week'),'','Good times for a call:',''].join('\n');
+    location.href='mailto:hello@legworks.com.au?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  });
+})();
+</script>
+</body>
+</html>
