@@ -92,6 +92,12 @@ input:focus,textarea:focus{outline:3px solid var(--focus);outline-offset:2px;bor
 .err{display:none;border:2px solid var(--lw-ink);padding:8px 12px;font-weight:600;font-size:18px}
 .err::before{content:"Check: "}
 .err.on{display:block}
+.sent{display:none;border:2px solid var(--lw-ink);padding:20px;gap:14px;flex-direction:column}
+.sent.on{display:flex}
+.sent p{margin:0}
+.sent .row{display:flex;flex-wrap:wrap;gap:12px}
+.btn.alt{background:transparent;color:var(--lw-ink);border:2px solid var(--lw-ink);min-height:52px;padding:14px 24px;font-size:18px}
+.btn.alt:hover{background:var(--lw-ink);color:var(--lw-paper)}
 footer{border-top:2px solid var(--lw-dim);padding-block:32px 48px;color:var(--lw-wing);font-size:18px}
 footer .col{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
 footer .left{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -185,6 +191,15 @@ footer a:hover{color:var(--lw-ink);border-bottom-color:var(--lw-ink)}
         <p class="err full" id="err" role="alert">Add your name and an email address to reply to.</p>
         <div class="full"><button class="btn" type="submit">Book a 20-minute call</button></div>
         <p class="note full" id="form-note">The button opens your email app with your answers filled in, addressed to hello@legworks.com.au. You press send.</p>
+        <div class="sent full" id="sent" role="status" aria-live="polite">
+          <p><b>Your email should be open, ready to send.</b> Nothing opened? Use one of these instead:</p>
+          <div class="row">
+            <a class="btn alt" id="gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+            <button class="btn alt" type="button" id="copy">Copy my message</button>
+            <a class="btn alt" href="tel:+61424681170">Call 0424 681 170</a>
+          </div>
+          <p class="note" id="copy-note">If you copy it, paste it into an email to hello@legworks.com.au.</p>
+        </div>
       </form>
     </div>
   </section>
@@ -214,7 +229,21 @@ footer a:hover{color:var(--lw-ink);border-bottom-color:var(--lw-ink)}
     var biz=v('f-biz');
     var subject='20-minute call'+(biz?' — '+biz:'')+' — '+name;
     var body=['Name: '+name,'Business: '+biz,'Email: '+email.value.trim(),'Phone: '+v('f-phone'),'','The work that eats my week:',v('f-week'),'','Good times for a call:',''].join('\n');
-    location.href='mailto:hello@legworks.com.au?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    var to='hello@legworks.com.au';
+    // A mailto link does nothing where no email app is set up (webmail, many phones and work PCs),
+    // so the ways that always work are shown straight away, beside it.
+    document.getElementById('gmail').href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(to)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    var copy=document.getElementById('copy'),note=document.getElementById('copy-note');
+    note.textContent='If you copy it, paste it into an email to '+to+'.';
+    copy.onclick=function(){
+      var text='To: '+to+'\nSubject: '+subject+'\n\n'+body;
+      var done=function(){note.textContent='Copied. Paste it into an email to '+to+'.'};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback)}else{fallback()}
+      function fallback(){var t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(_){note.textContent='Select and copy this, then email it to '+to+': '+text}document.body.removeChild(t)}
+    };
+    var sent=document.getElementById('sent');sent.classList.add('on');
+    location.href='mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    sent.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
 })();
 </script>
